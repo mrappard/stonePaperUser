@@ -35,6 +35,7 @@ type SocietyIdentifier struct {
 
 // Init method will be called during deployment.
 // The deploy transaction metadata is supposed to contain the administrator cert
+
 func (t *SocietyIdentifier) Init(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 	fmt.Printf("Init Chaincode...")
 	if len(args) != 0 {
@@ -44,7 +45,7 @@ func (t *SocietyIdentifier) Init(stub shim.ChaincodeStubInterface, function stri
 	// Create ownership table
 	err := stub.CreateTable("UserIdentity", []*shim.ColumnDefinition{
 		&shim.ColumnDefinition{Name: "User", Type: shim.ColumnDefinition_STRING, Key: true},
-		&shim.ColumnDefinition{Name: "Status", Type: shim.ColumnDefinition_BOOL, Key: false},
+		&shim.ColumnDefinition{Name: "Status", Type: shim.ColumnDefinition_STRING, Key: false},
 	})
 	if err != nil {
 		return nil, errors.New("Failed creating UserIdentity table.")
@@ -67,7 +68,7 @@ func (t *SocietyIdentifier) create(stub shim.ChaincodeStubInterface, args []stri
 	ok, err := stub.InsertRow("UserIdentity", shim.Row{
 		Columns: []*shim.Column{
 			&shim.Column{Value: &shim.Column_String_{String_: user}},
-			&shim.Column{Value: &shim.Column_Bool{Bool: true}}},
+			&shim.Column{Value: &shim.Column_String_{String_: "true"}}},
 	})
 
 	if !ok && err == nil {
@@ -87,12 +88,7 @@ func (t *SocietyIdentifier) update(stub shim.ChaincodeStubInterface, args []stri
 	}
 
 	user := args[0]
-	var state bool
-	if args[1] == "True" {
-		state = true;
-	} else{
-		state = false;
-		}
+	state := args[1]
 
 	// Verify the identity of the caller
 	// Only the owner can transfer one of his assets
@@ -114,7 +110,7 @@ func (t *SocietyIdentifier) update(stub shim.ChaincodeStubInterface, args []stri
 		shim.Row{
 			Columns: []*shim.Column{
 				&shim.Column{Value: &shim.Column_String_{String_: user}},
-				&shim.Column{Value: &shim.Column_Bool{Bool: state}},
+				&shim.Column{Value: &shim.Column_String_{String_: state}},
 			},
 		})
 	if err != nil {
@@ -135,7 +131,7 @@ func (t *SocietyIdentifier) update(stub shim.ChaincodeStubInterface, args []stri
 // asset can call this function.
 // An asset is any string to identify it. An owner is representated by one of his ECert/TCert.
 func (t *SocietyIdentifier) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
-
+	fmt.Println("invoke is running " + function)
 	// Handle different functions
 	if function == "create" {
 		// create ownership
