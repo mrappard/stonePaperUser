@@ -22,7 +22,7 @@ import (
 	"fmt"
 
 	"github.com/hyperledger/fabric/core/chaincode/shim"
-	"github.com/hyperledger/fabric/core/crypto/primitives"
+	//"github.com/hyperledger/fabric/core/crypto/primitives"
 )
 
 // SocietyIdentifier is simple chaincode implementing a basic Asset Management system
@@ -183,7 +183,7 @@ func (t *SocietyIdentifier) Query(stub shim.ChaincodeStubInterface, function str
 }
 
 func main() {
-	primitives.SetSecurityLevel("SHA3", 256)
+	//primitives.SetSecurityLevel("SHA3", 256)
 	err := shim.Start(new(SocietyIdentifier))
 	if err != nil {
 		fmt.Printf("Error starting SocietyIdentifier: %s", err)
