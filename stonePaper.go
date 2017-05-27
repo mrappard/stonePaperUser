@@ -149,6 +149,7 @@ func (t *SocietyIdentifier) Invoke(stub shim.ChaincodeStubInterface, function st
 // "query(asset)": returns the owner of the asset.
 // Anyone can invoke this function.
 func (t *SocietyIdentifier) Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
+/*
 	fmt.Printf("Query [%s]", function)
 
 	if function != "query" {
@@ -178,7 +179,7 @@ func (t *SocietyIdentifier) Query(stub shim.ChaincodeStubInterface, function str
 	}
 
 	fmt.Printf("Query done [% x]", row.Columns[1].GetBytes())
-
+*/
 	return []byte("This is a Test"),nil//row.Columns[1].GetBytes(), nil
 }
 
