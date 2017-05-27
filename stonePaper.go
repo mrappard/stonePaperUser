@@ -149,7 +149,7 @@ func (t *SocietyIdentifier) Invoke(stub shim.ChaincodeStubInterface, function st
 // "query(asset)": returns the owner of the asset.
 // Anyone can invoke this function.
 func (t *SocietyIdentifier) Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
-/*
+
 	fmt.Printf("Query [%s]", function)
 
 	if function != "query" {
@@ -172,6 +172,8 @@ func (t *SocietyIdentifier) Query(stub shim.ChaincodeStubInterface, function str
 	col1 := shim.Column{Value: &shim.Column_String_{String_: asset}}
 	columns = append(columns, col1)
 
+	return []byte("This is a Test X"),nil
+
 	row, err := stub.GetRow("UserIdentity", columns)
 	if err != nil {
 		fmt.Printf("Failed retriving user [%s]: [%s]", string(asset), err)
@@ -179,8 +181,8 @@ func (t *SocietyIdentifier) Query(stub shim.ChaincodeStubInterface, function str
 	}
 
 	fmt.Printf("Query done [% x]", row.Columns[1].GetBytes())
-*/
-	return []byte("This is a Test"),nil//row.Columns[1].GetBytes(), nil
+
+	return row.Columns[1].GetBytes(), nil
 }
 
 func main() {
