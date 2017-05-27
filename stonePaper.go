@@ -59,16 +59,17 @@ func (t *SocietyIdentifier) Init(stub shim.ChaincodeStubInterface, function stri
 func (t *SocietyIdentifier) create(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	fmt.Printf("create...")
 
-	if len(args) != 1 {
-		return nil, errors.New("Incorrect number of arguments. Expecting 1")
+	if len(args) != 2 {
+		return nil, errors.New("Incorrect number of arguments. Expecting 2")
 	}
 
 	user := args[0]
+	data := args[1]
 
 	ok, err := stub.InsertRow("UserIdentity", shim.Row{
 		Columns: []*shim.Column{
 			&shim.Column{Value: &shim.Column_String_{String_: user}},
-			&shim.Column{Value: &shim.Column_String_{String_: "true"}}},
+			&shim.Column{Value: &shim.Column_String_{String_: data}}},
 	})
 
 	if !ok && err == nil {
