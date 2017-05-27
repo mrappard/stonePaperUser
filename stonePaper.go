@@ -172,16 +172,17 @@ func (t *SocietyIdentifier) Query(stub shim.ChaincodeStubInterface, function str
 	col1 := shim.Column{Value: &shim.Column_String_{String_: asset}}
 	columns = append(columns, col1)
 
-	return []byte("This is a Test X"),nil
+
 
 	row, err := stub.GetRow("UserIdentity", columns)
 	if err != nil {
 		fmt.Printf("Failed retriving user [%s]: [%s]", string(asset), err)
+		return []byte("This is a Test Y"),nil
 		return nil, fmt.Errorf("Failed retriving user [%s]: [%s]", string(asset), err)
 	}
 
 	fmt.Printf("Query done [% x]", row.Columns[1].GetBytes())
-
+	return []byte("This is a Test Z"),nil
 	return row.Columns[1].GetBytes(), nil
 }
 
