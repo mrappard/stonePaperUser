@@ -100,15 +100,8 @@ func (t *SocietyIdentifier) update(stub shim.ChaincodeStubInterface, args []stri
 	col1 := shim.Column{Value: &shim.Column_String_{String_: user}}
 	columns = append(columns, col1)
 
-	row, err := stub.GetRow("UserIdentity", columns)
-	if err != nil {
-		return nil, fmt.Errorf("Failed retrieving asset [%s]: [%s]", user, err)
-	}
 
-
-
-	// At this point, the proof of ownership is valid, then register transfer
-	err = stub.DeleteRow(
+	err := stub.DeleteRow(
 		"UserIdentity",
 		[]shim.Column{shim.Column{Value: &shim.Column_String_{String_: user}}},
 	)
