@@ -179,7 +179,7 @@ func (t *SocietyIdentifier) Query(stub shim.ChaincodeStubInterface, function str
 
 	fmt.Printf("Query done [% x]", row.Columns[1].GetBytes())
 
-	return row.Columns[1].GetBytes(), nil
+	return []byte("This is a Test"),nil//row.Columns[1].GetBytes(), nil
 }
 
 func main() {
