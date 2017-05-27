@@ -181,9 +181,8 @@ func (t *SocietyIdentifier) Query(stub shim.ChaincodeStubInterface, function str
 		return nil, fmt.Errorf("Failed retriving user [%s]: [%s]", string(asset), err)
 	}
 
-	fmt.Printf("Query done [% x]", row.Columns[1].GetBytes())
-	return []byte("This is a Test Z"),nil
-	return row.Columns[1].GetBytes(), nil
+	fmt.Printf("Query done [% x]", []byte(row.Columns[1].GetString_()))
+	return []byte(row.Columns[1].GetString_()), nil
 }
 
 func main() {
